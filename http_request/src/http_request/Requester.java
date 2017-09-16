@@ -1,68 +1,52 @@
 package http_request;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.Date;
+
+import javax.net.ssl.HttpsURLConnection;
+
 public class Requester {
 	
-	private String urlString;
-	private String statusCode;
-	private String contentLength;
-	private String date;
+	private URL urlString;
+	private int statusCode;
+	private int contentLength;
+	private Date date;
 	
-	public void getRequest() {
+	public void getRequest(String urlStringName) throws IOException {
 		
+		String urlHttps = urlStringName;
+		URL urlName = new URL(urlHttps);
+		HttpsURLConnection httpsUrlConnection = (HttpsURLConnection) urlName.openConnection();
+		httpsUrlConnection.setRequestMethod("GET");
+		httpsUrlConnection.connect();
 		
-		
-		
-		
-		setUrl(null);
-		setStatusCode(null);
-		setContentLength(null);
-		setDate(null);
-		
+		urlString = httpsUrlConnection.getURL();
+		statusCode = httpsUrlConnection.getResponseCode();
+		contentLength = httpsUrlConnection.getContentLength();
+		date = new Date(httpsUrlConnection.getDate());
+				
 	}
 	
-	private void setUrl(String string) {
-		
-		urlString = string;
-		
-	}
-	
-	private void setStatusCode(String string) {
-		
-		statusCode = string;
-		
-	}
-
-	private void setContentLength(String string) {
-	
-		contentLength = string;
-	
-	}
-
-	private void setDate(String string) {
-	
-		date = string;
-	
-	}
-
-	public String getUrl() {
+	public URL getUrl() {
 		
 		return urlString;
 		
 	}
 	
-	public String getStatusCode() {
+	public int getStatusCode() {
 		
 		return statusCode;
 		
 	}
 
-	public String getContentLength() {
+	public int getContentLength() {
 	
 		return contentLength;
 	
 	}
 
-	public String getDate() {
+	public Date getDate() {
 	
 		return date;
 	
