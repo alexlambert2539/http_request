@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Date;
-
 import org.junit.Test;
 
 public class RequesterTest {
@@ -19,7 +17,7 @@ public class RequesterTest {
 		URL url = requester.getUrl();
 		int statusCode = requester.getStatusCode();
 		int contentLength = requester.getContentLength();
-		Date date = requester.getDate();
+		String date = requester.getDate();
 		
 		assertNotNull(url);
 		assertNotNull(statusCode);

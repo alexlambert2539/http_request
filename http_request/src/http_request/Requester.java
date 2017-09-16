@@ -2,7 +2,11 @@ package http_request;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -11,7 +15,7 @@ public class Requester {
 	private URL urlString;
 	private int statusCode;
 	private int contentLength;
-	private Date date;
+	private String date;
 	
 	public void getRequest(String urlStringName) throws IOException {
 		
@@ -24,8 +28,20 @@ public class Requester {
 		urlString = httpsUrlConnection.getURL();
 		statusCode = httpsUrlConnection.getResponseCode();
 		contentLength = httpsUrlConnection.getContentLength();
-		date = new Date(httpsUrlConnection.getDate());
+		
+		date = checkDateFormat(new Date(httpsUrlConnection.getDate()));
 				
+	}
+	
+	private String checkDateFormat(Date originalDate) {
+		
+		DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'", Locale.ENGLISH);
+		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+		
+		String formattedDate = dateFormat.format(originalDate);	
+		
+		return formattedDate;
+		
 	}
 	
 	public URL getUrl() {
@@ -46,7 +62,7 @@ public class Requester {
 	
 	}
 
-	public Date getDate() {
+	public String getDate() {
 	
 		return date;
 	
