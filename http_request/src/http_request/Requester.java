@@ -1,6 +1,8 @@
 package http_request;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,17 +21,50 @@ public class Requester {
 	
 	public void getRequest(String urlStringName) throws IOException {
 		
-		String urlHttps = urlStringName;
-		URL urlName = new URL(urlHttps);
-		HttpsURLConnection httpsUrlConnection = (HttpsURLConnection) urlName.openConnection();
-		httpsUrlConnection.setRequestMethod("GET");
-		httpsUrlConnection.connect();
+		String protocolType = determineProtocol(urlStringName);
 		
-		urlString = httpsUrlConnection.getURL();
-		statusCode = httpsUrlConnection.getResponseCode();
-		contentLength = httpsUrlConnection.getContentLength();
+		if (protocolType.equals("http")) {
+			
+			String urlHttp = urlStringName;
+			URL urlName = new URL(urlHttp);
+			HttpURLConnection httpUrlConnection = (HttpURLConnection) urlName.openConnection();
+			httpUrlConnection.setRequestMethod("GET");
+			httpUrlConnection.connect();
+			
+			urlString = httpUrlConnection.getURL();
+			statusCode = httpUrlConnection.getResponseCode();
+			contentLength = httpUrlConnection.getContentLength();
+			
+			date = checkDateFormat(new Date(httpUrlConnection.getDate()));
+			
+		} else if (protocolType.equals("https")) {
+			
+			String urlHttps = urlStringName;
+			URL urlName = new URL(urlHttps);
+			HttpsURLConnection httpsUrlConnection = (HttpsURLConnection) urlName.openConnection();
+			httpsUrlConnection.setRequestMethod("GET");
+			httpsUrlConnection.connect();
+			
+			urlString = httpsUrlConnection.getURL();
+			statusCode = httpsUrlConnection.getResponseCode();
+			contentLength = httpsUrlConnection.getContentLength();
+			
+			date = checkDateFormat(new Date(httpsUrlConnection.getDate()));
+			
+		} else {
+			
+			System.err.println("protocol type is not http or https");
+			
+		}
+				
+	}
+	
+	private String determineProtocol(String urlStringName) throws MalformedURLException {
 		
-		date = checkDateFormat(new Date(httpsUrlConnection.getDate()));
+		URL urlName = new URL(urlStringName);
+		String protocolString = urlName.getProtocol();
+		
+		return protocolString;
 				
 	}
 	
