@@ -18,8 +18,6 @@ public class ValidateURL {
 			
 		} else {
 			
-			System.err.println("invalid URL: " + url);
-			
 			return false;
 			
 		}
