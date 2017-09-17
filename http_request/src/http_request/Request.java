@@ -14,40 +14,49 @@ public class Request {
 		ValidateURL validateURL = new ValidateURL();
 		FormatDate formatDate = new FormatDate();
 		
-		String protocol = validateURL.determineProtocol(urlString);
-		
 		RequestProperties requestProperties = new RequestProperties();
+		
+		if (validateURL.validate(urlString)) {
+		
+			String protocol = validateURL.determineProtocol(urlString);
+			
+			if (protocol.equals("http")) {
 					
-		if (protocol.equals("http")) {
+				String urlHttp = urlString;
+				URL url = new URL(urlHttp);
+				HttpURLConnection httpUrlConnection = (HttpURLConnection) url.openConnection();
+				httpUrlConnection.setRequestMethod("GET");
+				httpUrlConnection.connect();
 				
-			String urlHttp = urlString;
-			URL url = new URL(urlHttp);
-			HttpURLConnection httpUrlConnection = (HttpURLConnection) url.openConnection();
-			httpUrlConnection.setRequestMethod("GET");
-			httpUrlConnection.connect();
-			
-			requestProperties.url = httpUrlConnection.getURL().toString();
-			requestProperties.statusCode = String.valueOf(httpUrlConnection.getResponseCode());
-			requestProperties.contentLength = String.valueOf(httpUrlConnection.getContentLength());
-			requestProperties.date = formatDate.format(new Date(httpUrlConnection.getDate()));
-							
-		} else if (protocol.equals("https")) {
-			
-			String urlHttps = urlString;
-			URL url = new URL(urlHttps);
-			HttpsURLConnection httpsUrlConnection = (HttpsURLConnection) url.openConnection();
-			httpsUrlConnection.setRequestMethod("GET");
-			httpsUrlConnection.connect();
-			
-			requestProperties.url = httpsUrlConnection.getURL().toString();
-			requestProperties.statusCode = String.valueOf(httpsUrlConnection.getResponseCode());
-			requestProperties.contentLength = String.valueOf(httpsUrlConnection.getContentLength());
-			requestProperties.date = formatDate.format(new Date(httpsUrlConnection.getDate()));
-							
+				requestProperties.url = httpUrlConnection.getURL().toString();
+				requestProperties.statusCode = String.valueOf(httpUrlConnection.getResponseCode());
+				requestProperties.contentLength = String.valueOf(httpUrlConnection.getContentLength());
+				requestProperties.date = formatDate.format(new Date(httpUrlConnection.getDate()));
+								
+			} else if (protocol.equals("https")) {
+				
+				String urlHttps = urlString;
+				URL url = new URL(urlHttps);
+				HttpsURLConnection httpsUrlConnection = (HttpsURLConnection) url.openConnection();
+				httpsUrlConnection.setRequestMethod("GET");
+				httpsUrlConnection.connect();
+				
+				requestProperties.url = httpsUrlConnection.getURL().toString();
+				requestProperties.statusCode = String.valueOf(httpsUrlConnection.getResponseCode());
+				requestProperties.contentLength = String.valueOf(httpsUrlConnection.getContentLength());
+				requestProperties.date = formatDate.format(new Date(httpsUrlConnection.getDate()));
+								
+			} else {
+					
+				System.err.println("invalid URL: " + urlString);
+					
+			}
+		
 		} else {
-				
-			System.err.println("invalid URL: " + urlString);
-				
+			
+			requestProperties.url = urlString;
+			requestProperties.error = "invalid url";
+			
 		}
 		
 		return requestProperties;

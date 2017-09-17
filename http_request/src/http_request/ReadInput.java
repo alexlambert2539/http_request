@@ -9,8 +9,6 @@ public class ReadInput {
 
 	public ArrayList<String> readInput() {
 		
-		ValidateURL validateURL = new ValidateURL();
-		
 		ArrayList<String> arrayList = new ArrayList<String>();
 		
 		try {
@@ -22,11 +20,7 @@ public class ReadInput {
 							
 				if (!inputString.isEmpty()) {
 					
-					if (validateURL.validate(inputString)) {
-					
-						arrayList.add(inputString);
-					
-					}
+					arrayList.add(inputString);
 					
 				} else {
 					
