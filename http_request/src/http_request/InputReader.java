@@ -4,11 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import org.apache.commons.validator.routines.UrlValidator;
 
 public class InputReader {
 
 	public ArrayList<String> readInput() {
+		
+		ValidateURL validateURL = new ValidateURL();
 		
 		ArrayList<String> arrayList = new ArrayList<String>();
 		
@@ -21,7 +22,7 @@ public class InputReader {
 							
 				if (!inputString.isEmpty()) {
 					
-					if (checkUrlValidity(inputString)) {
+					if (validateURL.validate(inputString)) {
 					
 						arrayList.add(inputString);
 					
@@ -44,25 +45,6 @@ public class InputReader {
 		}
 		
 		return arrayList;
-		
-	}
-	
-	private boolean checkUrlValidity(String sourceUrl) {
-		
-		String[] schemes = {"http","https"};
-		UrlValidator urlValidator = new UrlValidator(schemes);
-		
-		if (urlValidator.isValid(sourceUrl)) {
-			
-			return true;
-			
-		} else {
-			
-			System.err.println("Invalid URL: " + sourceUrl);
-			
-			return false;
-			
-		}
 		
 	}
 	
