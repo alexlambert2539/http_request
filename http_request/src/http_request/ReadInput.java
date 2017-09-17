@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class InputReader {
+public class ReadInput {
 
 	public ArrayList<String> readInput() {
 		

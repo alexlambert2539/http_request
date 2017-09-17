@@ -7,7 +7,7 @@ import java.util.Date;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class Requester {
+public class Request {
 		
 	public RequestProperties getRequest(String urlString) throws IOException {
 		

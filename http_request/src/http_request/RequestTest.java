@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import org.junit.Test;
 
-public class RequesterTest {
+public class RequestTest {
 	
 	private String[] urlStringName = {"http://www.bbc.co.uk/iplayer", 
 	                                  "https://google.com", 
@@ -19,11 +19,11 @@ public class RequesterTest {
 	@Test
 	public void test() throws IOException {
 		
-		Requester requester = new Requester();
+		Request request = new Request();
 		
 		for (int i=0; i<urlStringName.length; i++) {
 			
-			RequestProperties requestProperties = requester.getRequest(urlStringName[i]);		
+			RequestProperties requestProperties = request.getRequest(urlStringName[i]);		
 			
 			assertEquals(requestProperties.url, urlStringName[i]);
 			

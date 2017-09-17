@@ -9,7 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class InputReaderTest {
+public class ReadInputTest {
 	
 	private static String inputString = 
 			"http://www.bbc.co.uk/iplayer" + System.lineSeparator() +
@@ -32,8 +32,8 @@ public class InputReaderTest {
 	@Test
 	public void test() {
 			
-		InputReader inputReader = new InputReader();		
-		ArrayList<?> arrayList = inputReader.readInput();
+		ReadInput readInput = new ReadInput();		
+		ArrayList<?> arrayList = readInput.readInput();
 		
 		assertEquals(arrayList.get(0), "http://www.bbc.co.uk/iplayer");
 		assertEquals(arrayList.get(1), "https://google.com");

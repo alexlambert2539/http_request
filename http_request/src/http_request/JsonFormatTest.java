@@ -15,7 +15,8 @@ public class JsonFormatTest {
 		requestProperties.error = "invalid url";
 		
 		JsonFormat jsonFormat = new JsonFormat();
-		jsonFormat.toJson(requestProperties);
+		
+		System.out.println(jsonFormat.toJson(requestProperties));
 		
 	}
 
