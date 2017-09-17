@@ -26,6 +26,7 @@ public class Request {
 				URL url = new URL(urlHttp);
 				HttpURLConnection httpUrlConnection = (HttpURLConnection) url.openConnection();
 				httpUrlConnection.setRequestMethod("GET");
+				httpUrlConnection.setConnectTimeout(10000);
 				httpUrlConnection.connect();
 				
 				requestProperties.url = httpUrlConnection.getURL().toString();
@@ -39,6 +40,7 @@ public class Request {
 				URL url = new URL(urlHttps);
 				HttpsURLConnection httpsUrlConnection = (HttpsURLConnection) url.openConnection();
 				httpsUrlConnection.setRequestMethod("GET");
+				httpsUrlConnection.setConnectTimeout(10000);
 				httpsUrlConnection.connect();
 				
 				requestProperties.url = httpsUrlConnection.getURL().toString();
