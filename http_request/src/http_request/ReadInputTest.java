@@ -37,13 +37,17 @@ public class ReadInputTest {
 		
 		assertEquals(arrayList.get(0), "http://www.bbc.co.uk/iplayer");
 		assertEquals(arrayList.get(1), "https://google.com");
-		assertEquals(arrayList.get(2), "http://www.bbc.co.uk/missing/thing");
-		assertEquals(arrayList.get(3), "http://not.exists.bbc.co.uk/");
-		assertEquals(arrayList.get(4), "http://www.oracle.com/technetwork/java/javase/downloads/index.html");
-		assertEquals(arrayList.get(5), "https://www.pets4homes.co.uk/images/articles/1646/large/kitten-emergencies-signs-to-look-out-for-537479947ec1c.jpg");
-		assertEquals(arrayList.get(6), "http://site.mockito.org/");
+		assertEquals(arrayList.get(2), "bad://address");
+		assertEquals(arrayList.get(3), "http://www.bbc.co.uk/missing/thing");
+		assertEquals(arrayList.get(4), "http://not.exists.bbc.co.uk/");
+		assertEquals(arrayList.get(5), "http://www.oracle.com/technetwork/java/javase/downloads/index.html");
+		assertEquals(arrayList.get(6), "https://www.pets4homes.co.uk/images/articles/1646/large/kitten-emergencies-signs-to-look-out-for-537479947ec1c.jpg");
+		assertEquals(arrayList.get(7), "http://site.mockito.org/");
 		
-		assertEquals(arrayList.size(), 7);
+		assertEquals(arrayList.size(), 8);
+		
+		System.out.println("input contents: " + arrayList);
+		System.out.println("number of queries: " + arrayList.size());
 		
 	}
 	

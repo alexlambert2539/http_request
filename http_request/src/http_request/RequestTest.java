@@ -9,7 +9,7 @@ public class RequestTest {
 	
 	private String[] urlStringName = {"http://www.bbc.co.uk/iplayer", 
 	                                  "https://google.com", 
-	                                  //"bad://address", 
+	                                  "bad://address", 
 	                                  "http://www.bbc.co.uk/missing/thing", 
 	                                  "http://not.exists.bbc.co.uk/", 
 	                                  "http://www.oracle.com/technetwork/java/javase/downloads/index.html", 
@@ -17,20 +17,29 @@ public class RequestTest {
 	                                  "http://site.mockito.org/"};
 	
 	@Test
-	public void test() throws IOException {
+	public void test() {
 		
 		Request request = new Request();
 		
 		for (int i=0; i<urlStringName.length; i++) {
-			
-			RequestProperties requestProperties = request.getRequest(urlStringName[i]);		
-			
-			assertEquals(requestProperties.url, urlStringName[i]);
-			
-			System.out.println(requestProperties.url);
-			System.out.println(requestProperties.statusCode);
-			System.out.println(requestProperties.contentLength);
-			System.out.println(requestProperties.date);
+						
+			try {
+				
+				RequestProperties requestProperties = request.getRequest(urlStringName[i]);	
+				
+				assertEquals(requestProperties.url, urlStringName[i]);
+				
+				System.out.println(requestProperties.url);
+				System.out.println(requestProperties.statusCode);
+				System.out.println(requestProperties.contentLength);
+				System.out.println(requestProperties.date);
+				System.out.println(requestProperties.error);
+				
+			} catch (IOException e) {
+				
+				System.err.println("connection error: " + urlStringName[i]);				
+				
+			}			
 			
 		}
 		

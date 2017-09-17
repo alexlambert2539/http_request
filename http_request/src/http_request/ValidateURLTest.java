@@ -18,7 +18,7 @@ public class ValidateURLTest {
 		assertTrue(validateURL.validate(httpUrl));
 		assertTrue(validateURL.validate(httpsUrl));
 		assertFalse(validateURL.validate(badUrl));
-		
+				
 	}
 
 }

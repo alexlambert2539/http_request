@@ -16,7 +16,7 @@ public class JsonFormatTest {
 		
 		JsonFormat jsonFormat = new JsonFormat();
 		
-		System.out.println(jsonFormat.toJson(requestProperties));
+		System.out.println("JSON formatted:\n" + jsonFormat.toJson(requestProperties));
 		
 	}
 

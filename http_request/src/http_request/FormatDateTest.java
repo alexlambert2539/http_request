@@ -22,6 +22,9 @@ public class FormatDateTest {
 		
 		assertEquals(formatDate.format(date), "Fri, 31 Dec 9999 00:00:00 GMT");
 		
+		System.out.println("original date: " + date);
+		System.out.println("formatted date: " + formatDate.format(date));
+		
 	}
 
 }
