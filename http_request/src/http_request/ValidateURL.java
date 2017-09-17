@@ -1,5 +1,8 @@
 package http_request;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.apache.commons.validator.routines.UrlValidator;
 
 public class ValidateURL {
@@ -15,12 +18,30 @@ public class ValidateURL {
 			
 		} else {
 			
-			System.err.println("Invalid URL: " + url);
+			System.err.println("invalid URL: " + url);
 			
 			return false;
 			
 		}
 		
+	}
+	
+	public String determineProtocol(String urlString) {
+				
+		String protocolString = "";
+		
+		try {
+			
+			protocolString = new URL(urlString).getProtocol();
+			
+		} catch (MalformedURLException e) {
+			
+			System.err.print("invalid URL: " + urlString);
+			
+		}
+			
+		return protocolString;		
+				
 	}
 	
 }

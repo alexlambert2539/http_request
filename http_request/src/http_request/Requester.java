@@ -2,105 +2,56 @@ package http_request;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public class Requester {
-	
-	private URL urlString;
-	private int statusCode;
-	private int contentLength;
-	private String date;
-	
-	public void getRequest(String urlStringName) throws IOException {
 		
-		String protocolType = determineProtocol(urlStringName);
+	public RequestProperties getRequest(String urlString) throws IOException {
 		
-		if (protocolType.equals("http")) {
-			
-			String urlHttp = urlStringName;
-			URL urlName = new URL(urlHttp);
-			HttpURLConnection httpUrlConnection = (HttpURLConnection) urlName.openConnection();
+		ValidateURL validateURL = new ValidateURL();
+		FormatDate formatDate = new FormatDate();
+		
+		String protocol = validateURL.determineProtocol(urlString);
+		
+		RequestProperties requestProperties = new RequestProperties();
+					
+		if (protocol.equals("http")) {
+				
+			String urlHttp = urlString;
+			URL url = new URL(urlHttp);
+			HttpURLConnection httpUrlConnection = (HttpURLConnection) url.openConnection();
 			httpUrlConnection.setRequestMethod("GET");
 			httpUrlConnection.connect();
 			
-			urlString = httpUrlConnection.getURL();
-			statusCode = httpUrlConnection.getResponseCode();
-			contentLength = httpUrlConnection.getContentLength();
+			requestProperties.url = httpUrlConnection.getURL().toString();
+			requestProperties.statusCode = String.valueOf(httpUrlConnection.getResponseCode());
+			requestProperties.contentLength = String.valueOf(httpUrlConnection.getContentLength());
+			requestProperties.date = formatDate.format(new Date(httpUrlConnection.getDate()));
+							
+		} else if (protocol.equals("https")) {
 			
-			date = checkDateFormat(new Date(httpUrlConnection.getDate()));
-			
-		} else if (protocolType.equals("https")) {
-			
-			String urlHttps = urlStringName;
-			URL urlName = new URL(urlHttps);
-			HttpsURLConnection httpsUrlConnection = (HttpsURLConnection) urlName.openConnection();
+			String urlHttps = urlString;
+			URL url = new URL(urlHttps);
+			HttpsURLConnection httpsUrlConnection = (HttpsURLConnection) url.openConnection();
 			httpsUrlConnection.setRequestMethod("GET");
 			httpsUrlConnection.connect();
 			
-			urlString = httpsUrlConnection.getURL();
-			statusCode = httpsUrlConnection.getResponseCode();
-			contentLength = httpsUrlConnection.getContentLength();
-			
-			date = checkDateFormat(new Date(httpsUrlConnection.getDate()));
-			
+			requestProperties.url = httpsUrlConnection.getURL().toString();
+			requestProperties.statusCode = String.valueOf(httpsUrlConnection.getResponseCode());
+			requestProperties.contentLength = String.valueOf(httpsUrlConnection.getContentLength());
+			requestProperties.date = formatDate.format(new Date(httpsUrlConnection.getDate()));
+							
 		} else {
-			
-			System.err.println("protocol type is not http or https");
-			
+				
+			System.err.println("invalid URL: " + urlString);
+				
 		}
+		
+		return requestProperties;
 				
-	}
-	
-	private String determineProtocol(String urlStringName) throws MalformedURLException {
-		
-		URL urlName = new URL(urlStringName);
-		String protocolString = urlName.getProtocol();
-		
-		return protocolString;
-				
-	}
-	
-	private String checkDateFormat(Date originalDate) {
-		
-		DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'", Locale.ENGLISH);
-		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-		
-		String formattedDate = dateFormat.format(originalDate);	
-		
-		return formattedDate;
-		
-	}
-	
-	public URL getUrl() {
-		
-		return urlString;
-		
-	}
-	
-	public int getStatusCode() {
-		
-		return statusCode;
-		
-	}
-
-	public int getContentLength() {
-	
-		return contentLength;
-	
-	}
-
-	public String getDate() {
-	
-		return date;
-	
 	}
 	
 }

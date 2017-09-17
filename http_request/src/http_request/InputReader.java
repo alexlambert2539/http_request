@@ -30,6 +30,8 @@ public class InputReader {
 					
 				} else {
 					
+					System.out.println("processing request... ");
+					
 					break;
 					
 				}
@@ -40,7 +42,7 @@ public class InputReader {
 		
 		catch(IOException e) {
 			
-			e.printStackTrace();
+			System.err.println("unable to process input stream.");
 			
 		}
 		
